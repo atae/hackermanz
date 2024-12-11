@@ -29,28 +29,191 @@
             font-size: 50px;
             color: aquamarine;
             transition:cubic-bezier(1, 0, 0, 1);
-            height: 100vh;
-            width: 100vw;
+            height: 1000px;
+            width: 1000px;
             z-index: 1;
+        }
+
+        canvas {
+          border: 1px solid white;
+          background-color: rgba(0,0,0,0.5);
+          
         }
     </style>
 </head>
 <body>
     <marquee
-    direction="down"
-    width="250"
-    height="200"
-    behvavior="alternate"
-    scrolldelay="60"
-    truespeed="true"
-    scrollamount="20"
+        direction="down"
+        width="250"
+        height="200"
+        behvavior="alternate"
+        scrolldelay="60"
+        truespeed="true"
+        scrollamount="20"
     >
     <marquee behavior="alternate">
         I AM HACKERMANZ!!!111
     </marquee>
     </marquee>
     <div>
+        <canvas width="800" height="800" id="game"></canvas>
+        <script>
+        var canvas = document.getElementById('game');
+        var context = canvas.getContext('2d');
+        
+        // the canvas width & height, snake x & y, and the apple x & y, all need to be a multiples of the grid size in order for collision detection to work
+        var img = new Image();
+img.src = './deets.png';  // The image you want each cell to be
 
+
+ var headImg = new Image();
+ headImg.src = './deetsCHOMNPS.gif';
+
+ var codeRed = new Image();
+ codeRed.src = './CANRED.png'
+ let imagesLoaded = 0;
+ const totalImages = 3
+ img.onload = function() {
+    imagesLoaded+= 1;
+// Once the image is loaded, start the game loop
+if (imagesLoaded === totalImages) requestAnimationFrame(loop);
+};
+headImg.onload = function() {
+    imagesLoaded+= 1;
+// Once the image is loaded, start the game loop
+if (imagesLoaded === totalImages) requestAnimationFrame(loop);
+};
+
+codeRed.onload = function() {
+    imagesLoaded+= 1;
+// Once the image is loaded, start the game loop
+if (imagesLoaded === totalImages) requestAnimationFrame(loop);
+};
+
+var grid = 32;
+var count = 0;
+
+var snake = {
+  x: 160,
+  y: 160,
+  dx: grid,
+  dy: 0,
+  cells: [],
+  maxCells: 4
+};
+
+var apple = {
+  x: 320,
+  y: 320
+};
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function loop() {
+  requestAnimationFrame(loop);
+
+  if (++count < 8) {
+    return;
+  }
+  
+  count = 0;
+  context.clearRect(0,0,canvas.width,canvas.height);
+
+  // Move the snake
+  snake.x += snake.dx;
+  snake.y += snake.dy;
+
+  // Wrap horizontally
+  if (snake.x < 0) {
+    snake.x = canvas.width - grid;
+  } else if (snake.x >= canvas.width) {
+    snake.x = 0;
+  }
+
+  // Wrap vertically
+  if (snake.y < 0) {
+    snake.y = canvas.height - grid;
+  } else if (snake.y >= canvas.height) {
+    snake.y = 0;
+  }
+
+  snake.cells.unshift({x: snake.x, y: snake.y});
+
+  if (snake.cells.length > snake.maxCells) {
+    snake.cells.pop();
+  }
+
+  // Draw apple
+  context.fillStyle = 'red';
+  context.drawImage(codeRed, apple.x, apple.y, grid-1, grid-1);
+
+  // Draw each snake cell using the loaded image
+  snake.cells.forEach(function(cell, index) {
+    // Draw the cell as an image
+    // You can adjust the width/height if needed
+    if (index === 0) {
+        context.drawImage(headImg, cell.x, cell.y, grid, grid);
+    } else {
+        context.drawImage(img, cell.x, cell.y, grid, grid);
+    }
+    // If snake eats apple
+    if (cell.x === apple.x && cell.y === apple.y) {
+      snake.maxCells++;
+      apple.x = getRandomInt(0, 25) * grid;
+      apple.y = getRandomInt(0, 25) * grid;
+    }
+
+    // Check collision with itself
+    for (var i = index + 1; i < snake.cells.length; i++) {
+      if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
+        // reset game
+        snake.x = 160;
+        snake.y = 160;
+        snake.cells = [];
+        snake.maxCells = 4;
+        snake.dx = grid;
+        snake.dy = 0;
+
+        apple.x = getRandomInt(0, 25) * grid;
+        apple.y = getRandomInt(0, 25) * grid;
+      }
+    }
+  });
+}
+        
+        // listen to keyboard events to move the snake
+        document.addEventListener('keydown', function(e) {
+          // prevent snake from backtracking on itself by checking that it's
+          // not already moving on the same axis (pressing left while moving
+          // left won't do anything, and pressing right while moving left
+          // shouldn't let you collide with your own body)
+          // left arrow key
+          if (e.which === 65 && snake.dx === 0) {
+            snake.dx = -grid;
+            snake.dy = 0;
+          }
+          // up arrow key
+          else if (e.which === 87 && snake.dy === 0) {
+            snake.dy = -grid;
+            snake.dx = 0;
+          }
+          // right arrow key
+          else if (e.which === 68 && snake.dx === 0) {
+            snake.dx = grid;
+            snake.dy = 0;
+          }
+          // down arrow key
+          else if (e.which === 83 && snake.dy === 0) {
+            snake.dy = grid;
+            snake.dx = 0;
+          }
+        });
+        
+        // start the game
+        requestAnimationFrame(loop);
+        </script>
     </div>
 </body>
 </html>
