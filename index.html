@@ -103,10 +103,18 @@
         <button style="padding: 32px;" id="start">h4ck 1nt0 th3 m@1nfr@m3zzz
         </button>
         <canvas style="display: none;" width="800" height="800" id="game"></canvas>
+        <p style="color: white; font-size: 24px; font-family: 'Consolas'; border: 1px solid #67FB23; background-color: rgba(0,0,0,0.5);margin: 10px auto; width: 250px;">m41nfr4m3z: <span  id="score">0</span></p>
+        <br>
+        <button id="mute">SILENCE MUSIC</button>
         <script>
         var canvas = document.getElementById('game');
         var context = canvas.getContext('2d');
-        
+
+        const inSound = new Audio('./Im in.mp3')
+        inSound.volume = 0.3;
+        const governmentKnows = new Audio('./KNOWER - The Government Knows.mp3')
+        governmentKnows.loop = true;
+        governmentKnows.volume = 0.3;
         // the canvas width & height, snake x & y, and the apple x & y, all need to be a multiples of the grid size in order for collision detection to work
         var img = new Image();
 img.src = './deets.png';  // The image you want each cell to be
@@ -158,8 +166,10 @@ function getRandomInt(min, max) {
 }
 
 let score = 0;
+let music = true;
 const scoreUpdate = () => {
     score += 1;
+    inSound.play();
     document.getElementById('score').innerText = score;
     document.getElementById('scoreMessage').style.display = 'block'
     setTimeout(() => {
@@ -172,18 +182,13 @@ const scoreUpdate = () => {
                     document.getElementById('scoreMessage').style.display = 'block'
                     setTimeout(() => {
                         document.getElementById('scoreMessage').style.display = 'none'
-                        setTimeout(() => {
-                            document.getElementById('scoreMessage').style.display = 'block'
-                            setTimeout(() => {
-                                document.getElementById('scoreMessage').style.display = 'none'
-                            }, 250)
-                        }, 250)
-                    }, 250)
-                }, 250)
-            }, 250)
-        }, 250)
-    }, 250)
+                    }, 400)
+                }, 400)
+            }, 400)
+        }, 400)
+    }, 400)
 };
+
 
 function loop() {
   requestAnimationFrame(loop);
@@ -261,7 +266,9 @@ function loop() {
         document.getElementById('start').addEventListener('click', () => {
             document.getElementsByTagName('canvas')[0].style.display = 'inline';
             document.getElementById('start').style.display = 'none';
-        })
+            if (music) governmentKnows.play();
+        });
+
         
         // listen to keyboard events to move the snake
         document.addEventListener('keydown', function(e) {
@@ -290,11 +297,14 @@ function loop() {
             snake.dx = 0;
           }
         });
-        
         // start the game
-        requestAnimationFrame(loop);
+        // requestAnimationFrame(loop);
+        document.getElementById('mute').addEventListener('click', () => {
+            music = false;
+            governmentKnows.pause();
+        })
         </script>
-        <p style="color: white; font-size: 24px; font-family: 'Consolas'; border: 1px solid #67FB23; background-color: rgba(0,0,0,0.5);margin: 10px auto; width: 250px;">m41nfr4m3z: <span  id="score">0</span></p>
+        
     </div>
 </body>
 </html>
