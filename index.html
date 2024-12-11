@@ -35,13 +35,25 @@
         }
 
         canvas {
-          border: 1px solid white;
+          border: 1px solid #67FB23;
           background-color: rgba(0,0,0,0.5);
           
+        }
+
+        #scoreMessage {
+            font-family: "Comic Sans MS";
+            font-size: 150px;
+            color: red;
+            position: absolute;
+            z-index: 100;
+            display: none;
         }
     </style>
 </head>
 <body>
+    <div id="scoreMessage">
+        <h1>I'M IN.</h1>
+    </div>
     <marquee
         direction="down"
         width="250"
@@ -111,6 +123,16 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
+let score = 0;
+const scoreUpdate = () => {
+    score += 1;
+    document.getElementById('score').innerText = score;
+    document.getElementById('scoreMessage').style.display = 'block'
+    setTimeout(() => {
+        document.getElementById('scoreMessage').style.display = 'none'
+    }, 2000)
+};
+
 function loop() {
   requestAnimationFrame(loop);
 
@@ -163,6 +185,7 @@ function loop() {
       snake.maxCells++;
       apple.x = getRandomInt(0, 25) * grid;
       apple.y = getRandomInt(0, 25) * grid;
+      scoreUpdate();
     }
 
     // Check collision with itself
@@ -175,6 +198,7 @@ function loop() {
         snake.maxCells = 4;
         snake.dx = grid;
         snake.dy = 0;
+        score = 0;
 
         apple.x = getRandomInt(0, 25) * grid;
         apple.y = getRandomInt(0, 25) * grid;
@@ -214,6 +238,7 @@ function loop() {
         // start the game
         requestAnimationFrame(loop);
         </script>
+        <p style="color: white; font-size: 24px; font-family: 'Comic Sans MS'; border: 1px solid #67FB23; background-color: rgba(0,0,0,0.5);margin: 10px auto; width: 100px;">Score: <span  id="score">0</span></p>
     </div>
 </body>
 </html>
