@@ -169,6 +169,7 @@ let score = 0;
 let music = true;
 const scoreUpdate = () => {
     score += 1;
+    inSound.currentTime = 0;
     inSound.play();
     document.getElementById('score').innerText = score;
     document.getElementById('scoreMessage').style.display = 'block'
