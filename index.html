@@ -48,6 +48,7 @@
             position: absolute;
             z-index: 102;
             display: none;
+            margin-top: -50px;
         }
 
         button {
@@ -163,7 +164,25 @@ const scoreUpdate = () => {
     document.getElementById('scoreMessage').style.display = 'block'
     setTimeout(() => {
         document.getElementById('scoreMessage').style.display = 'none'
-    }, 2000)
+        setTimeout(() => {
+            document.getElementById('scoreMessage').style.display = 'block'
+            setTimeout(() => {
+                document.getElementById('scoreMessage').style.display = 'none'
+                setTimeout(() => {
+                    document.getElementById('scoreMessage').style.display = 'block'
+                    setTimeout(() => {
+                        document.getElementById('scoreMessage').style.display = 'none'
+                        setTimeout(() => {
+                            document.getElementById('scoreMessage').style.display = 'block'
+                            setTimeout(() => {
+                                document.getElementById('scoreMessage').style.display = 'none'
+                            }, 250)
+                        }, 250)
+                    }, 250)
+                }, 250)
+            }, 250)
+        }, 250)
+    }, 250)
 };
 
 function loop() {
