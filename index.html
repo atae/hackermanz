@@ -38,7 +38,7 @@
           border: 1px solid #67FB23;
           background-color: rgba(0,0,0,0.5);
           z-index: 101
-          
+    
         }
 
         #scoreMessage {
@@ -53,9 +53,11 @@
 </head>
 <body>
     <div id="scoreMessage">
-        <h1>I'M IN.</h1>
+        <h1>z0mG 1M 1N XD 11!!!111 XDdddDd
+        </h1>
     </div>
     <marquee
+        vspace="150"
         direction="down"
         width="250"
         height="200"
@@ -65,11 +67,26 @@
         scrollamount="20"
     >
     <marquee behavior="alternate">
-        I AM HACKERMANZ!!!111
+        I AM xXxH@ck3rm4nzzxXx!!!111
     </marquee>
     </marquee>
+    <marquee
+    direction="down"
+    width="250"
+    height="200"
+    behvavior="alternate"
+    scrolldelay="60"
+    truespeed="true"
+    scrollamount="20"
+>
+<marquee behavior="alternate">
+    I AM xXxH@ck3rm4nzzxXx!!!111
+</marquee>
+</marquee>
     <div>
-        <canvas width="800" height="800" id="game"></canvas>
+        <button style="padding: 32px;" id="start">h4ck 1nt0 th3 m@1nfr@m3zzz
+        </button>
+        <canvas style="display: none;" width="800" height="800" id="game"></canvas>
         <script>
         var canvas = document.getElementById('game');
         var context = canvas.getContext('2d');
@@ -200,13 +217,17 @@ function loop() {
         snake.dx = grid;
         snake.dy = 0;
         score = 0;
-
+        document.getElementById('score').innerText = score;
         apple.x = getRandomInt(0, 25) * grid;
         apple.y = getRandomInt(0, 25) * grid;
       }
     }
   });
 }
+        document.getElementById('start').addEventListener('click', () => {
+            document.getElementsByTagName('canvas')[0].style.display = 'inline';
+            document.getElementById('start').style.display = 'none';
+        })
         
         // listen to keyboard events to move the snake
         document.addEventListener('keydown', function(e) {
@@ -239,7 +260,7 @@ function loop() {
         // start the game
         requestAnimationFrame(loop);
         </script>
-        <p style="color: white; font-size: 24px; font-family: 'Comic Sans MS'; border: 1px solid #67FB23; background-color: rgba(0,0,0,0.5);margin: 10px auto; width: 100px;">Score: <span  id="score">0</span></p>
+        <p style="color: white; font-size: 24px; font-family: 'Consolas'; border: 1px solid #67FB23; background-color: rgba(0,0,0,0.5);margin: 10px auto; width: 250px;">m41nfr4m3z: <span  id="score">0</span></p>
     </div>
 </body>
 </html>
